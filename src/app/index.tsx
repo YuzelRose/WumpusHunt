@@ -1,98 +1,55 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { GlobalStyles } from "@/constants/GlobalStyles";
+import { useRouter } from "expo-router";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+export default function Index() {
+  const router = useRouter();
+  const handlePress = () => {
+    router.push("/start");
+  };
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
-
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+    <Pressable onPress={handlePress} style={GlobalStyles.backG}>
+      <View style={[GlobalStyles.center, { flex: 1 }]}>
+        <Text style={[GlobalStyles.text, styles.info]}>
+          Este juego fue desarrollado mediante React Native por{" "}
+          <Text style={[GlobalStyles.brightText, styles.info]}>YuzelRose</Text>{" "}
+          y <Text style={[GlobalStyles.brightText, styles.info]}>Edgar</Text>.
+          {"\n\n"}
+          Este proyecto tiene fines exclusivamente educativos y de
+          entretenimiento. No está afiliado, patrocinado ni respaldado por
+          ninguna empresa o entidad externa.
+          {"\n\n"}
+          El código fuente está diseñado para ser una base de aprendizaje para
+          la comunidad de desarrollo móvil, por lo que se permite su uso,
+          modificación y distribución siempre que se mantenga el crédito a los
+          desarrolladores originales.
+          {"\n\n"}
+          <Text style={[GlobalStyles.brightText, styles.info]}>
+            Advertencia de salud:
+          </Text>{" "}
+          Juega en un lugar bien iluminado y mantén una distancia segura de la
+          pantalla. Evita jugar si te sientes fatigado, estresado o con sueño, y
+          descansa cada 20-30 minutos para evitar fatiga visual.
+          {"\n\n"}
+          Agradecemos el interés en "La caza del Wumpus" y esperamos que
+          disfrutes la experiencia.
+        </Text>
+        <Text style={[GlobalStyles.brightText, styles.start]}>
+          Pulse para Continuar.
+        </Text>
+      </View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+  info: {
+    textAlign: "justify",
+    fontSize: 12,
+    width: "75%",
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  start: {
+    paddingTop: 20,
   },
 });

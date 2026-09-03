@@ -3,7 +3,7 @@
     "name": "WumpusGame",
     "slug": "WumpusGame",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "landscape",
     "icon": "./assets/images/icon.png",
     "scheme": "wumpusgame",
     "userInterfaceStyle": "automatic",
@@ -24,6 +24,13 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      [
+        "expo-status-bar",
+        {
+          "hidden": false,
+          "style": "dark"
+        }
+      ],
       "expo-router",
       [
         "expo-splash-screen",
