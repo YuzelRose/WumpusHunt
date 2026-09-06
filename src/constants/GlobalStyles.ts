@@ -72,6 +72,7 @@ export const GlobalStyles = StyleSheet.create<GlobalStyles>({
     borderRadius: 10,
   },
   h6: {
+    textAlign: "center",
     fontSize: 12,
     color: Colors.text,
     borderColor: Colors.text,

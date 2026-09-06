@@ -31,6 +31,13 @@ export default function RootLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="createMap"
+        options={{
+          title: "Create Map",
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }

@@ -1,10 +1,31 @@
 import { Colors } from "@/constants/GlobalStyles";
-import Svg, { Path } from "react-native-svg";
+import Svg, { Path, SvgProps } from "react-native-svg";
 
-export default function SvgComponent() {
+interface IconProps extends SvgProps {
+  size?: number;
+  color?: string;
+  strokeWidth?: number;
+  rotation?: number;
+}
+
+export default function SvgComponent({
+  rotation = 0,
+  size = 24,
+  color = Colors.text,
+  strokeWidth = 8,
+}: IconProps) {
   return (
-    <Svg width={24} height={24} fill={Colors.text} viewBox="0 0 24 24">
-      <Path d="M21 2h-5c-.3 0-.58.13-.77.37l-8.3 10.14L5 10.58V7.99H3v3c0 .27.11.52.29.71l3 3 .09.09-4.79 4.79 2.83 2.83 4.79-4.79.09.09 3 3c.19.19.44.29.71.29h3v-2h-2.59l-1.93-1.93 10.14-8.3c.23-.19.37-.47.37-.77V3c0-.55-.45-1-1-1m-1 5.53l-9.93 8.13-1.72-1.72 8.13-9.93h3.53v3.53z" />
+    <Svg
+      width={size}
+      height={size}
+      fill={color}
+      viewBox="0 0 24 24"
+      style={{ transform: [{ rotate: `${rotation}deg` }] }}
+    >
+      <Path
+        strokeWidth={strokeWidth}
+        d="M21 2h-5c-.3 0-.58.13-.77.37l-8.3 10.14L5 10.58V7.99H3v3c0 .27.11.52.29.71l3 3 .09.09-4.79 4.79 2.83 2.83 4.79-4.79.09.09 3 3c.19.19.44.29.71.29h3v-2h-2.59l-1.93-1.93 10.14-8.3c.23-.19.37-.47.37-.77V3c0-.55-.45-1-1-1m-1 5.53l-9.93 8.13-1.72-1.72 8.13-9.93h3.53v3.53z"
+      />
     </Svg>
   );
 }

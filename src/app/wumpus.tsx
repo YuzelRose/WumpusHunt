@@ -1,18 +1,23 @@
 import Interaction from "@/components/ui/Interaction";
 import Inventory from "@/components/ui/Inventory";
 import { Colors, GlobalStyles } from "@/constants/GlobalStyles";
+import { mapStorage } from "@/constants/storage";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function Wumpus() {
+  const map = mapStorage.map;
   const [direction, setDirection] = useState<string>("");
-  const [amo, setAmo] = useState<number>(0);
-  const [sword, setSword] = useState<boolean>(true);
-  const [candil, setCandil] = useState<boolean>(true);
+  const [amo, setAmo] = useState<number>(6);
+  const [sword, setSword] = useState<boolean>(false);
+  const [candil, setCandil] = useState<boolean>(false);
 
   return (
-    <View style={[GlobalStyles.backG]}>
-      <View></View>
+    <View style={[GlobalStyles.backG, styles.container]}>
+      <View style={styles.mainView}>
+        <View style={styles.mainGame}></View>
+        <View style={styles.downBar}></View>
+      </View>
       <View style={styles.sideBar}>
         <View style={styles.inventory}>
           <Inventory amo={amo} sword={sword} candil={candil} />
@@ -26,10 +31,12 @@ export default function Wumpus() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+  },
   sideBar: {
     width: "35%",
     height: "100%",
-    borderLeftWidth: 3,
     borderColor: Colors.text,
   },
   interaction: {
@@ -40,5 +47,23 @@ const styles = StyleSheet.create({
     textAlign: "left",
     width: "100%",
     height: "50%",
+  },
+  mainView: {
+    width: "65%",
+    height: "100%",
+    borderColor: Colors.text,
+  },
+  mainGame: {
+    width: "100%",
+    height: "75%",
+    borderWidth: 3,
+    borderBottomWidth: 0,
+    borderColor: Colors.text,
+  },
+  downBar: {
+    width: "100%",
+    height: "25%",
+    borderWidth: 3,
+    borderColor: Colors.text,
   },
 });

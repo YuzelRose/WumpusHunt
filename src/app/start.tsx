@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import { variables } from "@/constants/constants";
 import { GlobalStyles } from "@/constants/GlobalStyles";
 import { useRouter } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
@@ -6,7 +7,7 @@ import { StyleSheet, Text, View } from "react-native";
 export default function Start() {
   const router = useRouter();
   const Start = () => {
-    router.push("/wumpus");
+    router.push("/createMap");
   };
   const Credits = () => {
     router.push("/credits");
@@ -19,7 +20,7 @@ export default function Start() {
         <Button texto="Empezar" onPress={Start} />
         <Button texto="Créditos" onPress={Credits} />
         <View style={styles.version}>
-          <Text style={GlobalStyles.h6}>versión 0.0.1</Text>
+          <Text style={GlobalStyles.h6}>versión {variables.version}</Text>
         </View>
       </View>
     </View>
