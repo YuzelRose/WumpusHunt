@@ -1,12 +1,6 @@
+import { IconProps } from "@/constants/constants";
 import { Colors } from "@/constants/GlobalStyles";
-import Svg, { Path, SvgProps } from "react-native-svg";
-
-interface IconProps extends SvgProps {
-  size?: number;
-  color?: string;
-  strokeWidth?: number;
-  rotation?: number;
-}
+import Svg, { Path } from "react-native-svg";
 
 export default function SpyGlass({
   rotation = 0,

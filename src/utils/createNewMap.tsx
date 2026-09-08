@@ -1,12 +1,11 @@
 import {
   enemyType,
   mapCell,
-  midWait,
   msg,
   roomType,
   variables,
-  wait,
 } from "@/constants/constants";
+import { mapNotNull, mapStorage } from "@/constants/storage";
 import { Dispatch, SetStateAction } from "react";
 import { createHallways } from "./createHallWays";
 import { getPos } from "./utils";
@@ -49,43 +48,32 @@ function createRoom(map: mapCell[][], createdRoom: string) {
   return newMap;
 }
 //crear mapa
-export async function createNewMap(
-  out: Dispatch<SetStateAction<string>>,
-  progress: Dispatch<SetStateAction<number>>,
-) {
-  progress(0);
+export async function createNewMap(out: Dispatch<SetStateAction<string>>) {
   out(msg.a);
   let Map = newMap();
   Map = dropSides(Map);
-  await wait(midWait);
-  progress(12.5);
+  //await wait();
   out(msg.b);
   for (let i = 0; i < variables.halls; i++) Map = createHallways(Map, i);
-  await wait(midWait);
-  progress(25);
+  //await wait();
   out(msg.c);
   for (let i = 0; i < variables.holes; i++)
     Map = createRoom(Map, roomType.hole);
-  await wait(midWait);
-  progress(37.5);
+  //await wait();
   out(msg.d);
   Map = createRoom(Map, roomType.church);
-  await wait(midWait);
-  progress(50);
+  //await wait();
   out(msg.e);
   Map = createRoom(Map, roomType.wumpusCove);
-  await wait(midWait);
-  progress(62.5);
+  //await wait();
   out(msg.f);
   Map = createRoom(Map, roomType.ghoulCove);
-  await wait(midWait);
-  progress(75);
+  //await wait();
   out(msg.g);
   for (let i = 0; i < 2; i++) Map = createRoom(Map, roomType.armory);
-  await wait(midWait);
-  progress(87.5);
+  //await wait();
   out(msg.h);
-  await wait(midWait);
-  progress(100);
-  return Map;
+  mapStorage.map = Map;
+  if (!mapNotNull()) return false;
+  return true;
 }

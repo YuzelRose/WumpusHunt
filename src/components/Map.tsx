@@ -1,7 +1,21 @@
-import { mapCell } from "@/constants/constants";
+import { flag, mapCell } from "@/constants/constants"; // Importa flag
+import { mapStorage, posStorage } from "@/constants/storage"; // Importa stores
+import { useEffect, useState } from "react"; // Importa hooks
 import { Text, View } from "react-native";
 
-export default function Map({ map }: { map: mapCell[][] }) {
+export default function Map({ flag }: flag) {
+  // Estado local para forzar re-render y copiar el mapa
+  const [map, setMap] = useState<mapCell[][]>([]);
+  const [playerPos, setPlayerPos] = useState(posStorage.pos);
+
+  // Actualizar mapa y posición cuando cambie la flag
+  useEffect(() => {
+    // Copia superficial del mapa (para que React detecte el cambio)
+    setMap([...mapStorage.map]);
+    // Copia la posición
+    setPlayerPos({ ...posStorage.pos });
+  }, [flag]); // 👈 Depende de la flag
+
   const getCellSymbol = (cell: any) => {
     if (!cell) return "?";
 
@@ -32,6 +46,7 @@ export default function Map({ map }: { map: mapCell[][] }) {
         return "⬛"; // Habitación normal
     }
   };
+
   return (
     <View style={{ marginTop: 20, padding: 10 }}>
       <Text style={{ color: "white", fontWeight: "bold", marginBottom: 10 }}>
@@ -41,87 +56,106 @@ export default function Map({ map }: { map: mapCell[][] }) {
       {/* Grid 7x7 */}
       {map.map((row, y) => (
         <View key={y} style={{ flexDirection: "row" }}>
-          {row.map((cell, x) => (
-            <View
-              key={x}
-              style={{
-                width: 40,
-                height: 40,
-                borderWidth: 1,
-                borderColor: "gray",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#222",
-              }}
-            >
-              {/* Símbolo principal de la celda */}
-              <Text style={{ fontSize: 18 }}>{getCellSymbol(cell)}</Text>
+          {row.map((cell, x) => {
+            // Verificar si esta celda es la posición del jugador
+            const isPlayer = playerPos.x === x && playerPos.y === y;
 
-              {/* Indicadores de paredes abiertas (flechas) */}
+            return (
               <View
+                key={x}
                 style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
+                  width: 40,
+                  height: 40,
+                  borderWidth: 2,
+                  borderColor: isPlayer ? "lime" : "gray",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: isPlayer ? "rgba(0, 255, 0, 0.2)" : "#222",
                 }}
               >
-                {cell.n && (
-                  <Text
+                {/* Símbolo principal de la celda */}
+                <Text style={{ fontSize: 18 }}>{getCellSymbol(cell)}</Text>
+
+                {/* Indicadores de paredes abiertas (flechas) */}
+                <View
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                  }}
+                >
+                  {cell.n && (
+                    <Text
+                      style={{
+                        position: "absolute",
+                        top: -2,
+                        left: "45%",
+                        fontSize: 8,
+                        color: "cyan",
+                      }}
+                    >
+                      ↑
+                    </Text>
+                  )}
+                  {cell.s && (
+                    <Text
+                      style={{
+                        position: "absolute",
+                        bottom: -2,
+                        left: "45%",
+                        fontSize: 8,
+                        color: "cyan",
+                      }}
+                    >
+                      ↓
+                    </Text>
+                  )}
+                  {cell.o && (
+                    <Text
+                      style={{
+                        position: "absolute",
+                        left: -2,
+                        top: "45%",
+                        fontSize: 8,
+                        color: "cyan",
+                      }}
+                    >
+                      ←
+                    </Text>
+                  )}
+                  {cell.e && (
+                    <Text
+                      style={{
+                        position: "absolute",
+                        right: -2,
+                        top: "45%",
+                        fontSize: 8,
+                        color: "cyan",
+                      }}
+                    >
+                      →
+                    </Text>
+                  )}
+                </View>
+
+                {/* Si es la posición del jugador, mostrar un indicador extra */}
+                {isPlayer && (
+                  <View
                     style={{
                       position: "absolute",
-                      top: -2,
-                      left: "45%",
-                      fontSize: 8,
-                      color: "cyan",
+                      top: -8,
+                      left: "50%",
+                      transform: [{ translateX: -8 }],
                     }}
                   >
-                    ↑
-                  </Text>
-                )}
-                {cell.s && (
-                  <Text
-                    style={{
-                      position: "absolute",
-                      bottom: -2,
-                      left: "45%",
-                      fontSize: 8,
-                      color: "cyan",
-                    }}
-                  >
-                    ↓
-                  </Text>
-                )}
-                {cell.o && (
-                  <Text
-                    style={{
-                      position: "absolute",
-                      left: -2,
-                      top: "45%",
-                      fontSize: 8,
-                      color: "cyan",
-                    }}
-                  >
-                    ←
-                  </Text>
-                )}
-                {cell.e && (
-                  <Text
-                    style={{
-                      position: "absolute",
-                      right: -2,
-                      top: "45%",
-                      fontSize: 8,
-                      color: "cyan",
-                    }}
-                  >
-                    →
-                  </Text>
+                    <Text style={{ fontSize: 12, color: "lime" }}>👇</Text>
+                  </View>
                 )}
               </View>
-            </View>
-          ))}
+            );
+          })}
         </View>
       ))}
     </View>

@@ -60,7 +60,7 @@ export const GlobalStyles = StyleSheet.create<GlobalStyles>({
     borderRadius: 10,
   },
   h4: {
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: "bold",
     color: Colors.text,
     textAlign: "center",

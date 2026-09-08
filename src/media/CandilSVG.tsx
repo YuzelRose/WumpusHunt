@@ -1,12 +1,6 @@
+import { IconProps } from "@/constants/constants";
 import { Colors } from "@/constants/GlobalStyles";
-import Svg, { G, Path, Rect, SvgProps } from "react-native-svg";
-
-interface IconProps extends SvgProps {
-  size?: number;
-  color?: string;
-  strokeWidth?: number;
-  rotation?: number;
-}
+import Svg, { G, Path, Rect } from "react-native-svg";
 
 export default function VerticalScope({
   rotation = 0,

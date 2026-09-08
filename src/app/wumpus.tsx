@@ -1,29 +1,39 @@
+import Map from "@/components/Map";
+import Bar from "@/components/ui/bar";
 import Interaction from "@/components/ui/Interaction";
 import Inventory from "@/components/ui/Inventory";
+import { roomType } from "@/constants/constants";
 import { Colors, GlobalStyles } from "@/constants/GlobalStyles";
-import { mapStorage } from "@/constants/storage";
-import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { getRoom } from "@/utils/utils";
+import { useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function Wumpus() {
-  const map = mapStorage.map;
-  const [direction, setDirection] = useState<string>("");
-  const [amo, setAmo] = useState<number>(6);
-  const [sword, setSword] = useState<boolean>(false);
-  const [candil, setCandil] = useState<boolean>(false);
+  const [room, setRoom] = useState(roomType.start);
+  const [action, setAction] = useState<string>("");
+  const [flag, setFlag] = useState<boolean>(false);
+
+  useEffect(() => {
+    setRoom(getRoom());
+  }, [flag]);
 
   return (
     <View style={[GlobalStyles.backG, styles.container]}>
       <View style={styles.mainView}>
-        <View style={styles.mainGame}></View>
-        <View style={styles.downBar}></View>
+        <View style={styles.mainGame}>
+          <Text style={GlobalStyles.text}>Accion: {action}</Text>
+          <Map flag={flag} />
+        </View>
+        <View style={styles.downBar}>
+          <Bar flag={flag} />
+        </View>
       </View>
       <View style={styles.sideBar}>
         <View style={styles.inventory}>
-          <Inventory amo={amo} sword={sword} candil={candil} />
+          <Inventory flag={flag} />
         </View>
         <View style={styles.interaction}>
-          <Interaction setDirection={setDirection} />
+          <Interaction setAction={setAction} setFlag={setFlag} flag={flag} />
         </View>
       </View>
     </View>
@@ -41,12 +51,12 @@ const styles = StyleSheet.create({
   },
   interaction: {
     width: "100%",
-    height: "50%",
+    height: "40%",
   },
   inventory: {
     textAlign: "left",
     width: "100%",
-    height: "50%",
+    height: "60%",
   },
   mainView: {
     width: "65%",
@@ -55,14 +65,14 @@ const styles = StyleSheet.create({
   },
   mainGame: {
     width: "100%",
-    height: "75%",
+    height: "60%",
     borderWidth: 3,
     borderBottomWidth: 0,
     borderColor: Colors.text,
   },
   downBar: {
     width: "100%",
-    height: "25%",
+    height: "40%",
     borderWidth: 3,
     borderColor: Colors.text,
   },

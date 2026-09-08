@@ -1,48 +1,93 @@
+import { actions, outs } from "@/constants/constants";
+import { Colors } from "@/constants/GlobalStyles";
 import ArrowSVG from "@/media/ArrowSVG";
-import { View } from "react-native";
+import ShootSVG from "@/media/ShootSVG";
+import SpyGlass from "@/media/SpyGlass";
+import { managgeAction, validDirectionsBool } from "@/utils/utils";
+import { useState } from "react";
+import { StyleSheet, View } from "react-native";
 import Button from "../Button";
 
 interface directionProps {
-  setDirection: React.Dispatch<React.SetStateAction<string>>;
+  setAction: React.Dispatch<React.SetStateAction<string>>;
+  setFlag: React.Dispatch<React.SetStateAction<boolean>>;
+  flag: boolean;
 }
 
-export default function Interaction({ setDirection }: directionProps) {
+export default function Interaction({
+  setAction,
+  flag,
+  setFlag,
+}: directionProps) {
+  const [outs, setOuts] = useState<outs>(validDirectionsBool());
+  const [valDir, setValDir] = useState({
+    front: true,
+    back: true,
+    left: true,
+    right: true,
+  });
+
+  const managePress = (action: string) => {
+    setAction(action);
+    managgeAction(action);
+    setOuts(validDirectionsBool());
+    setFlag(!flag);
+  };
+
   return (
     <View style={styles.wrapper}>
-      <Button
-        onPress={() => setDirection && setDirection("F")}
-        svg={<ArrowSVG rotation={90} />}
-      />
       <View style={styles.line}>
         <Button
-          onPress={() => setDirection && setDirection("L")}
-          svg={<ArrowSVG rotation={0} />}
-        />
-        <Button
-          onPress={() => setDirection && setDirection("B")}
-          svg={<ArrowSVG rotation={270} />}
-        />
-        <Button
-          onPress={() => setDirection && setDirection("R")}
-          svg={<ArrowSVG rotation={180} />}
-        />
-      </View>
-      <View style={styles.line}>
-        <Button
-          onPress={() => setDirection && setDirection("F")}
+          onPress={() => managePress(actions.intereact)}
           svg={<SpyGlass />}
         />
-        <Button
-          onPress={() => setDirection && setDirection("F")}
-          texto="Interactuar"
-        />
+        {valDir.front ? (
+          <Button
+            onPress={() => managePress(actions.front)}
+            svg={<ArrowSVG rotation={90} />}
+          />
+        ) : (
+          <View style={styles.button}>
+            <ArrowSVG rotation={90} />
+          </View>
+        )}
+        <Button onPress={() => managePress(actions.shoot)} svg={<ShootSVG />} />
+      </View>
+      <View style={styles.line}>
+        {valDir.left ? (
+          <Button
+            onPress={() => managePress(actions.left)}
+            svg={<ArrowSVG rotation={0} />}
+          />
+        ) : (
+          <View style={styles.button}>
+            <ArrowSVG rotation={0} />
+          </View>
+        )}
+        {valDir.back ? (
+          <Button
+            onPress={() => managePress(actions.back)}
+            svg={<ArrowSVG rotation={270} />}
+          />
+        ) : (
+          <View style={styles.button}>
+            <ArrowSVG rotation={270} />
+          </View>
+        )}
+        {valDir.right ? (
+          <Button
+            onPress={() => managePress(actions.right)}
+            svg={<ArrowSVG rotation={180} />}
+          />
+        ) : (
+          <View style={styles.button}>
+            <ArrowSVG rotation={180} />
+          </View>
+        )}
       </View>
     </View>
   );
 }
-
-import SpyGlass from "@/media/SpyGlass";
-import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -57,5 +102,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     width: "100%",
+  },
+  button: {
+    borderColor: Colors.text,
+    padding: 10,
+    borderWidth: 2,
+    borderRadius: 10,
   },
 });

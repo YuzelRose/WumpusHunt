@@ -5,18 +5,21 @@ interface InventorySlotProps {
   item: string;
   quantity?: number;
   svg?: React.ReactNode;
+  face?: string;
 }
 
 export default function InventorySlot({
   item,
   quantity = -1,
   svg,
+  face,
 }: InventorySlotProps) {
   return (
     <View style={styles.slot}>
       {svg && <View>{svg}</View>}
       <Text style={GlobalStyles.text}>{item}</Text>
       {quantity > -1 ? <Text style={GlobalStyles.text}>{quantity}</Text> : null}
+      {face ? <Text style={GlobalStyles.text}>{face}</Text> : null}
     </View>
   );
 }
