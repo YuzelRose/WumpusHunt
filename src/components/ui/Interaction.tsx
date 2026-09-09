@@ -5,22 +5,24 @@ import {
 } from "@/constants/directionalMap/directionUtils";
 import { Colors } from "@/constants/GlobalStyles";
 import { inventoryStorage } from "@/constants/inventory/inventoryStorage";
-import { managgeAction } from "@/constants/utils";
+import { manageAction } from "@/constants/utils";
 import ArrowSVG from "@/media/ArrowSVG";
 import ShootSVG from "@/media/ShootSVG";
 import SpyGlass from "@/media/SpyGlass";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Button from "../Button";
 
 export default function Interaction({ flag, setFlag }: flag) {
+  const router = useRouter();
   const [valDir, setValDir] = useState(validDirectionsBool());
   const [shoot, setShoot] = useState(getRoom() === roomType.passageway);
   const [light, setLight] = useState(inventoryStorage.inv.light);
   const [room, setRoom] = useState(getRoom());
 
   const managePress = (action: string) => {
-    managgeAction(action);
+    manageAction(action, router);
     setValDir(validDirectionsBool());
     setShoot(getRoom() === roomType.passageway);
     setLight(inventoryStorage.inv.light);

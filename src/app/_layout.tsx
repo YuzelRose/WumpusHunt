@@ -38,6 +38,13 @@ export default function RootLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="GameOver"
+        options={{
+          title: "Create Map",
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }

@@ -18,6 +18,11 @@ export function setMapNewRoomSTR(newData: string) {
   mapStorage.map[pos.y][pos.x].place = newData;
 }
 
+export function setMapNewEnemySTR(newData: string) {
+  const pos = posStorage.pos;
+  mapStorage.map[pos.y][pos.x].enemy = newData;
+}
+
 export function setPosSTR(newData: position) {
   posStorage.prev = posStorage.pos;
   posStorage.pos = newData;
@@ -236,4 +241,10 @@ export function relativeDir() {
         right: cardinalDir.surS,
       };
   }
+}
+
+export function positionRoom(position: position) {
+  const room = mapStorage.map[position.y][position.x].place;
+  if (room === roomType.room) return true;
+  return false;
 }

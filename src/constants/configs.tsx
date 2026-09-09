@@ -5,8 +5,9 @@ export const variables = {
   debug: true,
   halls: 12,
   holes: 4,
+  randMoves: 4,
   maxAttempts: 50,
-  version: "0.2.0",
+  version: "0.2.2",
 };
 //Enemigos
 export const enemyType = {

@@ -1,15 +1,11 @@
-import Map from "@/components/Map";
-import { variables } from "@/constants/configs";
-import { mapStorage } from "@/constants/directionalMap/directionalMapStorage";
 import { createNewMap } from "@/constants/directionalMap/mapGen/createNewMap";
 import { GlobalStyles } from "@/constants/GlobalStyles";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-export default function createMap() {
+export default function CreateMap() {
   const router = useRouter();
-  const map = mapStorage.map;
   const [msg, setMsg] = useState("");
   const [flag, setFlag] = useState(false);
 
@@ -32,8 +28,6 @@ export default function createMap() {
           </Text>
         ) : null}
       </View>
-
-      {variables.debug && map.length > 0 && <Map flag={false} />}
     </Pressable>
   );
 }
