@@ -1,14 +1,9 @@
-import {
-  enemyType,
-  mapCell,
-  msg,
-  roomType,
-  variables,
-} from "@/constants/constants";
-import { mapNotNull, mapStorage } from "@/constants/storage";
+import { enemyType, roomType, variables } from "@/constants/configs";
+import { msg } from "@/constants/msg/msgStorage";
 import { Dispatch, SetStateAction } from "react";
+import { mapCell, mapStorage } from "../directionalMapStorage";
+import { getPos, mapNotNull } from "../directionUtils";
 import { createHallways } from "./createHallWays";
-import { getPos } from "./utils";
 //inicializar mapa
 function newMap() {
   const initialMap: mapCell[][] = Array.from({ length: 7 }, () =>

@@ -1,24 +1,77 @@
+import { roomType, variables } from "../configs";
 import {
-  actions,
   cardinalDir,
-  mapCell,
-  position,
-  roomType,
-  variables,
-} from "@/constants/constants";
-import {
   directionStorage,
-  goBack,
-  inventoryStorage,
+  mapCell,
   mapStorage,
+  position,
   posStorage,
-  setDirSTR,
-  setPosSTR,
-} from "@/constants/storage";
+} from "./directionalMapStorage";
 
-//espera artificial
-export const wait = () => new Promise((resolve) => setTimeout(resolve, 1600));
-export const midWait = 1600;
+//dar nuevos valores a las variables invocables
+export function setMapSTR(newData: mapCell[][]) {
+  mapStorage.map = newData;
+}
+
+export function setMapNewRoomSTR(newData: string) {
+  const pos = posStorage.pos;
+  mapStorage.map[pos.y][pos.x].place = newData;
+}
+
+export function setPosSTR(newData: position) {
+  posStorage.prev = posStorage.pos;
+  posStorage.pos = newData;
+}
+// ir a la posicion previa
+export function goBack(facing: number) {
+  let back = facing - 2;
+  if (back === 0) back = 4;
+  if (back === -1) back = 3;
+  directionStorage.dir.roseWind = back;
+  directionStorage.dir.direction = facedDirection(back);
+  const currentPos = posStorage.pos;
+  const prevPos = posStorage.prev;
+  posStorage.pos = { x: prevPos.x, y: prevPos.y };
+  posStorage.prev = { x: currentPos.x, y: currentPos.y };
+}
+//establecer la direccion en la que se esta viendo el mapa
+export function setDirSTR(newData: number) {
+  let data = newData;
+  const pos = posStorage.pos;
+  if (data > 4) data = 1;
+  if (data < 1) data = 4;
+  directionStorage.dir.roseWind = data;
+  switch (data) {
+    case cardinalDir.norteN:
+      directionStorage.dir.direction = cardinalDir.norteS;
+      setPosSTR({ x: pos.x, y: pos.y - 1 }); // Norte: y - 1
+      break;
+    case cardinalDir.oesteN:
+      directionStorage.dir.direction = cardinalDir.oesteS;
+      setPosSTR({ x: pos.x - 1, y: pos.y }); // Oeste: x - 1
+      break;
+    case cardinalDir.surN:
+      directionStorage.dir.direction = cardinalDir.surS;
+      setPosSTR({ x: pos.x, y: pos.y + 1 }); // Sur: y + 1
+      break;
+    case cardinalDir.esteN:
+      directionStorage.dir.direction = cardinalDir.esteS;
+      setPosSTR({ x: pos.x + 1, y: pos.y }); // Este: x + 1
+      break;
+  }
+}
+//variables invocables no nulas
+export function mapNotNull() {
+  const map = mapStorage.map;
+  if (!map || map.length === 0 || !map[0]) return false;
+  return true;
+}
+
+export function posNotNull() {
+  const pos = posStorage.pos;
+  if (pos.x < 0 || pos.x > 6 || pos.y < 0 || pos.y > 6) return false;
+  return true;
+}
 
 //generacion del mapa no tocar
 export function getPos(map: mapCell[][]) {
@@ -106,49 +159,50 @@ export function validDirections() {
 //Salidas validas de la habitacion
 export function validDirectionsBool() {
   const room = getRoomData();
-
-  return { n: room.n, o: room.o, s: room.s, e: room.e };
+  const validDir = { n: room.n, o: room.o, s: room.s, e: room.e };
+  switch (directionStorage.dir.roseWind) {
+    case 1:
+      return {
+        front: validDir.n,
+        back: validDir.s,
+        left: validDir.o,
+        right: validDir.e,
+      };
+    case 2:
+      return {
+        front: validDir.o,
+        back: validDir.e,
+        left: validDir.s,
+        right: validDir.n,
+      };
+    case 3:
+      return {
+        front: validDir.s,
+        back: validDir.n,
+        left: validDir.e,
+        right: validDir.o,
+      };
+    case 4:
+      return {
+        front: validDir.e,
+        back: validDir.o,
+        left: validDir.n,
+        right: validDir.s,
+      };
+  }
+  return {
+    front: false,
+    back: false,
+    left: false,
+    right: false,
+  };
 }
-
+//Direccion a la que se esta viendo string
 export function facedDirection(dir: number) {
   if (dir === cardinalDir.norteN) return cardinalDir.norteS;
   else if (dir === cardinalDir.oesteN) return cardinalDir.oesteS;
   else if (dir === cardinalDir.surN) return cardinalDir.surS;
   else return cardinalDir.esteS;
-}
-
-export function managgeAction(action: string) {
-  const dir = directionStorage.dir;
-  const amo = inventoryStorage.inv.amo;
-  const valid = validDirections();
-  switch (action) {
-    case actions.intereact:
-      break;
-    case actions.shoot:
-      if (amo > 0) inventoryStorage.inv.amo = amo - 1;
-      break;
-    case actions.front:
-      if (valid.includes(facedDirection(dir.roseWind))) {
-        const x = posStorage.pos.x;
-        const y = posStorage.pos.y;
-        const newX = x - posStorage.prev.x;
-        const newY = y - posStorage.prev.y;
-        setPosSTR({ x: x + newX, y: y + newY });
-      }
-      break;
-    case actions.back:
-      goBack(dir.roseWind);
-      break;
-    case actions.left:
-      const leftDir = dir.roseWind + 1 > 4 ? 1 : dir.roseWind + 1;
-      if (valid.includes(facedDirection(leftDir))) setDirSTR(leftDir);
-
-      break;
-    case actions.right:
-      const rightDir = dir.roseWind - 1 < 1 ? 4 : dir.roseWind - 1;
-      if (valid.includes(facedDirection(rightDir))) setDirSTR(rightDir);
-      break;
-  }
 }
 
 export function relativeDir() {

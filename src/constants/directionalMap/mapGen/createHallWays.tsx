@@ -1,11 +1,6 @@
-import {
-  enemyType,
-  mapCell,
-  position,
-  roomType,
-  variables,
-} from "@/constants/constants";
-import { connect, getPos } from "./utils";
+import { enemyType, roomType, variables } from "@/constants/configs";
+import { mapCell, position } from "../directionalMapStorage";
+import { connect, getPos } from "../directionUtils";
 
 // Valida en qué direcciones el vecino actual tiene una pared abierta hacia nuestra celda
 function validDirections(map: mapCell[][], pos: position): string[] {

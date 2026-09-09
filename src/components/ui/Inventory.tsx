@@ -1,14 +1,15 @@
 import InventorySlot from "@/components/InventorySlot";
-import { flag } from "@/constants/constants";
+import { passFlag } from "@/constants/configs";
+import { directionStorage } from "@/constants/directionalMap/directionalMapStorage";
 import { GlobalStyles } from "@/constants/GlobalStyles";
-import { directionStorage, inventoryStorage } from "@/constants/storage";
+import { inventoryStorage } from "@/constants/inventory/inventoryStorage";
 import AmoSVG from "@/media/AmoSVG";
 import CandilSVG from "@/media/CandilSVG";
 import SwordSVG from "@/media/SwordSVG";
 import { useEffect, useState } from "react";
 import { Text } from "react-native";
 
-export default function Inventory({ flag }: flag) {
+export default function Inventory({ flag }: passFlag) {
   const [ivntry, setIvntry] = useState(inventoryStorage.inv);
   const [face, setFace] = useState(directionStorage.dir.direction);
 

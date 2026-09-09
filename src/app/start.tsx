@@ -1,5 +1,5 @@
 import Button from "@/components/Button";
-import { variables } from "@/constants/constants";
+import { variables } from "@/constants/configs";
 import { GlobalStyles } from "@/constants/GlobalStyles";
 import { useRouter } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";

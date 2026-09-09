@@ -1,11 +1,11 @@
 import {
-    enemyType,
-    passageMsg,
-    placeMsg,
-    roomType,
-} from "@/constants/constants";
-import { inventoryStorage } from "@/constants/storage";
-import { getRoom, getRooomEnemy } from "./utils";
+  passageMsg,
+  placeLightMsg,
+  placeMsg,
+} from "@/constants/msg/msgStorage";
+import { enemyType, roomType } from "../configs";
+import { getRoom, getRooomEnemy } from "../directionalMap/directionUtils";
+import { inventoryStorage } from "../inventory/inventoryStorage";
 
 interface passagewayProps {
   setMsg: React.Dispatch<React.SetStateAction<string>>;
@@ -22,8 +22,7 @@ export function passagewayMSG({ setMsg }: passagewayProps) {
 
 export function defaultMSG({ setMsg }: passagewayProps) {
   const light = inventoryStorage.inv.light;
-  const room = getRoom();
-  switch (room) {
+  switch (getRoom()) {
     case roomType.armory:
       setMsg(placeMsg.A);
       break;
@@ -34,11 +33,8 @@ export function defaultMSG({ setMsg }: passagewayProps) {
       setMsg(placeMsg.G);
       break;
     case roomType.hole:
-      if (light) setMsg(placeMsg.HL);
+      if (light) setMsg(placeLightMsg.H);
       else setMsg(placeMsg.def);
-      break;
-    case roomType.passageway:
-      setMsg(passageMsg.P);
       break;
     case roomType.start:
       setMsg(placeMsg.S);
@@ -47,9 +43,9 @@ export function defaultMSG({ setMsg }: passagewayProps) {
       setMsg(placeMsg.W);
       break;
     case roomType.wumpusMarks:
-      setMsg(placeMsg.wM);
+      setMsg(placeLightMsg.WM);
       break;
-    case roomType.room:
+    default:
       setMsg(placeMsg.def);
       break;
   }

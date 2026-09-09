@@ -1,9 +1,13 @@
-import { flag, mapCell } from "@/constants/constants"; // Importa flag
-import { mapStorage, posStorage } from "@/constants/storage"; // Importa stores
+import { passFlag } from "@/constants/configs";
+import {
+  mapCell,
+  mapStorage,
+  posStorage,
+} from "@/constants/directionalMap/directionalMapStorage"; // Importa stores
 import { useEffect, useState } from "react"; // Importa hooks
 import { Text, View } from "react-native";
 
-export default function Map({ flag }: flag) {
+export default function Map({ flag }: passFlag) {
   // Estado local para forzar re-render y copiar el mapa
   const [map, setMap] = useState<mapCell[][]>([]);
   const [playerPos, setPlayerPos] = useState(posStorage.pos);

@@ -1,4 +1,4 @@
-import { IconProps } from "@/constants/constants";
+import { IconProps } from "@/constants/configs";
 import { Colors } from "@/constants/GlobalStyles";
 import Svg, { G, Path, Rect } from "react-native-svg";
 

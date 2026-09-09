@@ -3,6 +3,7 @@ import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 export const Colors = {
   prim: "#1c5560",
   backg: "black",
+  unactive: "#31463a",
   text: "#79ae92",
   LightAccent: "#fbffcd",
   balance: "#000000",

@@ -2,15 +2,14 @@ import Map from "@/components/Map";
 import Bar from "@/components/ui/bar";
 import Interaction from "@/components/ui/Interaction";
 import Inventory from "@/components/ui/Inventory";
-import { roomType } from "@/constants/constants";
+import { roomType } from "@/constants/configs";
+import { getRoom } from "@/constants/directionalMap/directionUtils";
 import { Colors, GlobalStyles } from "@/constants/GlobalStyles";
-import { getRoom } from "@/utils/utils";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export default function Wumpus() {
   const [room, setRoom] = useState(roomType.start);
-  const [action, setAction] = useState<string>("");
   const [flag, setFlag] = useState<boolean>(false);
 
   useEffect(() => {
@@ -21,7 +20,6 @@ export default function Wumpus() {
     <View style={[GlobalStyles.backG, styles.container]}>
       <View style={styles.mainView}>
         <View style={styles.mainGame}>
-          <Text style={GlobalStyles.text}>Accion: {action}</Text>
           <Map flag={flag} />
         </View>
         <View style={styles.downBar}>
@@ -33,7 +31,7 @@ export default function Wumpus() {
           <Inventory flag={flag} />
         </View>
         <View style={styles.interaction}>
-          <Interaction setAction={setAction} setFlag={setFlag} flag={flag} />
+          <Interaction setFlag={setFlag} flag={flag} />
         </View>
       </View>
     </View>

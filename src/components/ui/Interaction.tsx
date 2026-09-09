@@ -1,57 +1,66 @@
-import { actions, outs } from "@/constants/constants";
+import { actions, flag, roomType } from "@/constants/configs";
+import {
+  getRoom,
+  validDirectionsBool,
+} from "@/constants/directionalMap/directionUtils";
 import { Colors } from "@/constants/GlobalStyles";
+import { inventoryStorage } from "@/constants/inventory/inventoryStorage";
+import { managgeAction } from "@/constants/utils";
 import ArrowSVG from "@/media/ArrowSVG";
 import ShootSVG from "@/media/ShootSVG";
 import SpyGlass from "@/media/SpyGlass";
-import { managgeAction, validDirectionsBool } from "@/utils/utils";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Button from "../Button";
 
-interface directionProps {
-  setAction: React.Dispatch<React.SetStateAction<string>>;
-  setFlag: React.Dispatch<React.SetStateAction<boolean>>;
-  flag: boolean;
-}
-
-export default function Interaction({
-  setAction,
-  flag,
-  setFlag,
-}: directionProps) {
-  const [outs, setOuts] = useState<outs>(validDirectionsBool());
-  const [valDir, setValDir] = useState({
-    front: true,
-    back: true,
-    left: true,
-    right: true,
-  });
+export default function Interaction({ flag, setFlag }: flag) {
+  const [valDir, setValDir] = useState(validDirectionsBool());
+  const [shoot, setShoot] = useState(getRoom() === roomType.passageway);
+  const [light, setLight] = useState(inventoryStorage.inv.light);
+  const [room, setRoom] = useState(getRoom());
 
   const managePress = (action: string) => {
-    setAction(action);
     managgeAction(action);
-    setOuts(validDirectionsBool());
+    setValDir(validDirectionsBool());
+    setShoot(getRoom() === roomType.passageway);
+    setLight(inventoryStorage.inv.light);
+    setRoom(getRoom());
     setFlag(!flag);
   };
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.line}>
-        <Button
-          onPress={() => managePress(actions.intereact)}
-          svg={<SpyGlass />}
-        />
+        {light || room === roomType.armory ? (
+          <Button
+            onPress={() => managePress(actions.intereact)}
+            svg={<SpyGlass />}
+          />
+        ) : (
+          <View style={styles.unActiveButton}>
+            <SpyGlass color={Colors.unactive} />
+          </View>
+        )}
         {valDir.front ? (
           <Button
             onPress={() => managePress(actions.front)}
             svg={<ArrowSVG rotation={90} />}
           />
         ) : (
-          <View style={styles.button}>
-            <ArrowSVG rotation={90} />
+          <View style={styles.unActiveButton}>
+            <ArrowSVG rotation={90} color={Colors.unactive} />
           </View>
         )}
-        <Button onPress={() => managePress(actions.shoot)} svg={<ShootSVG />} />
+        {shoot ? (
+          <Button
+            onPress={() => managePress(actions.shoot)}
+            svg={<ShootSVG />}
+          />
+        ) : (
+          <View style={styles.unActiveButton}>
+            <ShootSVG color={Colors.unactive} />
+          </View>
+        )}
       </View>
       <View style={styles.line}>
         {valDir.left ? (
@@ -60,8 +69,8 @@ export default function Interaction({
             svg={<ArrowSVG rotation={0} />}
           />
         ) : (
-          <View style={styles.button}>
-            <ArrowSVG rotation={0} />
+          <View style={styles.unActiveButton}>
+            <ArrowSVG rotation={0} color={Colors.unactive} />
           </View>
         )}
         {valDir.back ? (
@@ -70,8 +79,8 @@ export default function Interaction({
             svg={<ArrowSVG rotation={270} />}
           />
         ) : (
-          <View style={styles.button}>
-            <ArrowSVG rotation={270} />
+          <View style={styles.unActiveButton}>
+            <ArrowSVG rotation={270} color={Colors.unactive} />
           </View>
         )}
         {valDir.right ? (
@@ -80,8 +89,8 @@ export default function Interaction({
             svg={<ArrowSVG rotation={180} />}
           />
         ) : (
-          <View style={styles.button}>
-            <ArrowSVG rotation={180} />
+          <View style={styles.unActiveButton}>
+            <ArrowSVG rotation={180} color={Colors.unactive} />
           </View>
         )}
       </View>
@@ -103,8 +112,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     width: "100%",
   },
-  button: {
-    borderColor: Colors.text,
+  unActiveButton: {
+    borderColor: Colors.unactive,
     padding: 10,
     borderWidth: 2,
     borderRadius: 10,

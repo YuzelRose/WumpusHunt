@@ -1,5 +1,5 @@
-import { roomType } from "@/constants/constants";
-import { getRoom } from "@/utils/utils";
+import { roomType } from "@/constants/configs";
+import { getRoom } from "@/constants/directionalMap/directionUtils";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 

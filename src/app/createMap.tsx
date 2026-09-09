@@ -1,8 +1,8 @@
 import Map from "@/components/Map";
-import { variables } from "@/constants/constants";
+import { variables } from "@/constants/configs";
+import { mapStorage } from "@/constants/directionalMap/directionalMapStorage";
+import { createNewMap } from "@/constants/directionalMap/mapGen/createNewMap";
 import { GlobalStyles } from "@/constants/GlobalStyles";
-import { mapStorage } from "@/constants/storage";
-import { createNewMap } from "@/utils/createNewMap";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
