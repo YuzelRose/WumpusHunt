@@ -40,7 +40,8 @@ export function defaultMSG({ setMsg }: passagewayProps) {
       setMsg(placeMsg.S);
       break;
     case roomType.wumpusCove:
-      setMsg(placeMsg.W);
+      if (getRooomEnemy() === enemyType.wumpus) setMsg(placeMsg.W);
+      else setMsg(placeMsg.WR);
       break;
     case roomType.wumpusMarks:
       setMsg(placeLightMsg.WM);
@@ -49,4 +50,5 @@ export function defaultMSG({ setMsg }: passagewayProps) {
       setMsg(placeMsg.def);
       break;
   }
+  if (getRooomEnemy() === enemyType.wumpus) setMsg(placeMsg.W);
 }

@@ -6,8 +6,8 @@ export interface inventory {
 }
 //configuracion base
 export const baseInventory = {
-  baseAmo: 6,
-  extraAmoPerArmory: 3,
+  baseAmo: 3,
+  extraAmoPerArmory: 1,
   light: false,
   sword: false,
 };

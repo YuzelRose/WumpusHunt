@@ -1,7 +1,12 @@
 import { enemyType, roomType, variables } from "@/constants/configs";
+import {
+  baseInventory,
+  inventoryStorage,
+} from "@/constants/inventory/inventoryStorage";
 import { msg } from "@/constants/msg/msgStorage";
+import { wumpusStorage } from "@/constants/wumpus/WumpusStorage";
 import { Dispatch, SetStateAction } from "react";
-import { mapCell, mapStorage } from "../directionalMapStorage";
+import { mapCell, mapStorage, posStorage } from "../directionalMapStorage";
 import { getPos, mapNotNull } from "../directionUtils";
 import { createHallways } from "./createHallWays";
 //inicializar mapa
@@ -38,12 +43,20 @@ function createRoom(map: mapCell[][], createdRoom: string) {
   newMap[pos.y][pos.x].place = createdRoom;
   if (createdRoom === roomType.ghoulCove)
     newMap[pos.y][pos.x].enemy = enemyType.ghoul;
-  if (createdRoom === roomType.wumpusCove)
+  if (createdRoom === roomType.wumpusCove) {
     newMap[pos.y][pos.x].enemy = enemyType.wumpus;
+    wumpusStorage.pos = { y: pos.y, x: pos.x };
+  }
   return newMap;
 }
 //crear mapa
 export async function createNewMap(out: Dispatch<SetStateAction<string>>) {
+  inventoryStorage.inv.amo = baseInventory.baseAmo;
+  inventoryStorage.inv.light = false;
+  inventoryStorage.inv.sword = false;
+  wumpusStorage.life = variables.wumpusLife;
+  posStorage.pos = { x: 3, y: 3 };
+  posStorage.prev = { x: 3, y: 4 };
   out(msg.a);
   let Map = newMap();
   Map = dropSides(Map);
@@ -55,8 +68,8 @@ export async function createNewMap(out: Dispatch<SetStateAction<string>>) {
   for (let i = 0; i < variables.holes; i++)
     Map = createRoom(Map, roomType.hole);
   //await wait();
-  out(msg.d);
-  Map = createRoom(Map, roomType.church);
+  //out(msg.d);
+  //Map = createRoom(Map, roomType.church);
   //await wait();
   out(msg.e);
   Map = createRoom(Map, roomType.wumpusCove);

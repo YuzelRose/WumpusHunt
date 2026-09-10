@@ -19,6 +19,7 @@ export const placeMsg = {
   C: "Entras a uan iglesia un altar suavemene iluminado atrae tu vista.\nPodrias descanzar aqui.",
   R: "Entras a una habitación.",
   W: "El aire se vuelve denso y pesado. Algo te observa desde las sombras...",
+  WR: "El aire se vuelve denso y pesado.",
   G: "Mientras te submerjes en la oscuridad los sonidos guturales de una bestia rompen el silencio, preparate.",
   P: "Entras en la oscura y angosta brecha.\n¿Sigues adelante?",
   NG: "Un hedor putrefacto invade tus fosas nasales.",

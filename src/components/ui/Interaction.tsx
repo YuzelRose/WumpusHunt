@@ -1,6 +1,7 @@
-import { actions, flag, roomType } from "@/constants/configs";
+import { actions, enemyType, flag, roomType } from "@/constants/configs";
 import {
   getRoom,
+  getRooomEnemy,
   validDirectionsBool,
 } from "@/constants/directionalMap/directionUtils";
 import { Colors } from "@/constants/GlobalStyles";
@@ -20,20 +21,26 @@ export default function Interaction({ flag, setFlag }: flag) {
   const [shoot, setShoot] = useState(getRoom() === roomType.passageway);
   const [light, setLight] = useState(inventoryStorage.inv.light);
   const [room, setRoom] = useState(getRoom());
+  const [counter, setCounter] = useState(1);
 
   const managePress = (action: string) => {
-    manageAction(action, router);
+    manageAction(action, router, counter);
     setValDir(validDirectionsBool());
-    setShoot(getRoom() === roomType.passageway);
+    setShoot(
+      getRoom() === roomType.passageway ||
+        getRoom() === roomType.ghoulCove ||
+        getRooomEnemy() === enemyType.wumpus,
+    );
     setLight(inventoryStorage.inv.light);
     setRoom(getRoom());
     setFlag(!flag);
+    setCounter(counter + 1);
   };
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.line}>
-        {light || room === roomType.armory ? (
+        {room === roomType.armory ? (
           <Button
             onPress={() => managePress(actions.intereact)}
             svg={<SpyGlass />}

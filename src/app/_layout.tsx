@@ -39,9 +39,16 @@ export default function RootLayout() {
         }}
       />
       <Stack.Screen
-        name="GameOver"
+        name="gameOver"
         options={{
           title: "Create Map",
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="end"
+        options={{
+          title: "end",
           headerShown: false,
         }}
       />

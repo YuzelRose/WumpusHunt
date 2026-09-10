@@ -6,8 +6,10 @@ export const variables = {
   halls: 12,
   holes: 4,
   randMoves: 4,
+  randWumpusMoves: 5,
+  wumpusLife: 4,
   maxAttempts: 50,
-  version: "0.2.2",
+  version: "0.3.0",
 };
 //Enemigos
 export const enemyType = {

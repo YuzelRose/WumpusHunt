@@ -2,19 +2,12 @@ import Map from "@/components/Map";
 import Bar from "@/components/ui/bar";
 import Interaction from "@/components/ui/Interaction";
 import Inventory from "@/components/ui/Inventory";
-import { roomType } from "@/constants/configs";
-import { getRoom } from "@/constants/directionalMap/directionUtils";
 import { Colors, GlobalStyles } from "@/constants/GlobalStyles";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function Wumpus() {
-  const [room, setRoom] = useState(roomType.start);
   const [flag, setFlag] = useState<boolean>(false);
-
-  useEffect(() => {
-    setRoom(getRoom());
-  }, [flag]);
 
   return (
     <View style={[GlobalStyles.backG, styles.container]}>

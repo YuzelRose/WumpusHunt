@@ -3,10 +3,10 @@ import { inventoryStorage } from "@/constants/inventory/inventoryStorage";
 import { useRouter } from "expo-router";
 import { cardinalDir, mapStorage, posStorage } from "../directionalMapStorage";
 import {
-    positionRoom,
-    setDirSTR,
-    setMapNewEnemySTR,
-    validDirections,
+  positionRoom,
+  setDirSTR,
+  setMapNewEnemySTR,
+  validDirections,
 } from "../directionUtils";
 
 export function prevRoomEvent(
@@ -17,6 +17,7 @@ export function prevRoomEvent(
   const lastRoomType = mapStorage.map[lastRoom.y][lastRoom.x].place;
   const lastRoomEnemy = mapStorage.map[lastRoom.y][lastRoom.x].enemy;
   const light = inventoryStorage.inv.light;
+  if (lastRoomEnemy === enemyType.wumpus) router.push("/gameOver");
   switch (lastRoomType) {
     case roomType.hole:
       if (action !== actions.back) router.push("/gameOver");
