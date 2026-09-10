@@ -2,14 +2,14 @@ import { SvgProps } from "react-native-svg";
 
 //configuraciones
 export const variables = {
-  debug: true,
+  debug: false,
   halls: 12,
   holes: 4,
   randMoves: 4,
   randWumpusMoves: 5,
   wumpusLife: 4,
   maxAttempts: 50,
-  version: "0.3.0",
+  version: "1.0.0",
 };
 //Enemigos
 export const enemyType = {

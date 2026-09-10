@@ -1,7 +1,9 @@
+import MainVisual from "@/components/MainVisual";
 import Map from "@/components/Map";
 import Bar from "@/components/ui/bar";
 import Interaction from "@/components/ui/Interaction";
 import Inventory from "@/components/ui/Inventory";
+import { variables } from "@/constants/configs";
 import { Colors, GlobalStyles } from "@/constants/GlobalStyles";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -13,10 +15,10 @@ export default function Wumpus() {
     <View style={[GlobalStyles.backG, styles.container]}>
       <View style={styles.mainView}>
         <View style={styles.mainGame}>
-          <Map flag={flag} />
+          <MainVisual flag={flag} />
         </View>
         <View style={styles.downBar}>
-          <Bar flag={flag} />
+          {variables.debug ? <Map flag={flag} /> : <Bar flag={flag} />}
         </View>
       </View>
       <View style={styles.sideBar}>

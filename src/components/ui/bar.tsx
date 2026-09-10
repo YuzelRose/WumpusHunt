@@ -1,8 +1,7 @@
-import { passFlag, roomType } from "@/constants/configs";
-import { getRoom } from "@/constants/directionalMap/directionUtils";
+import { passFlag } from "@/constants/configs";
 import { GlobalStyles } from "@/constants/GlobalStyles";
 import { placeMsg } from "@/constants/msg/msgStorage";
-import { defaultMSG, passagewayMSG } from "@/constants/msg/msgUtils";
+import { defaultMSG } from "@/constants/msg/msgUtils";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -10,9 +9,7 @@ export default function Bar({ flag }: passFlag) {
   const [msg, setMsg] = useState(placeMsg.S);
 
   useEffect(() => {
-    const room = getRoom();
-    if (room !== roomType.passageway) defaultMSG({ setMsg });
-    else passagewayMSG({ setMsg });
+    defaultMSG({ setMsg });
   }, [flag]);
 
   return (

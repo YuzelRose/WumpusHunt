@@ -46,6 +46,9 @@ export function defaultMSG({ setMsg }: passagewayProps) {
     case roomType.wumpusMarks:
       setMsg(placeLightMsg.WM);
       break;
+    case roomType.passageway:
+      setMsg(placeMsg.P);
+      break;
     default:
       setMsg(placeMsg.def);
       break;
