@@ -10,7 +10,7 @@ export const variables = {
   randWumpusMoves: 5,
   wumpusLife: 4,
   maxAttempts: 50,
-  version: "1.0.0",
+  version: "1.1.0",
 };
 //Enemigos
 export const enemyType = {
