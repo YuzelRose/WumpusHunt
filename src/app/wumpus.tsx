@@ -1,6 +1,7 @@
 import MainVisual from "@/components/MainVisual";
 import Map from "@/components/Map";
 import Bar from "@/components/ui/bar";
+import DemoController from "@/components/ui/DemoController";
 import Interaction from "@/components/ui/Interaction";
 import Inventory from "@/components/ui/Inventory";
 import { variables } from "@/constants/configs";
@@ -26,7 +27,11 @@ export default function Wumpus() {
           <Inventory flag={flag} />
         </View>
         <View style={styles.interaction}>
-          <Interaction setFlag={setFlag} flag={flag} />
+          {variables.demoMode ? (
+            <DemoController setFlag={setFlag} flag={flag} />
+          ) : (
+            <Interaction setFlag={setFlag} flag={flag} />
+          )}
         </View>
       </View>
     </View>

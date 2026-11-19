@@ -7,10 +7,15 @@ import { StyleSheet, Text, View } from "react-native";
 export default function Start() {
   const router = useRouter();
   const Start = () => {
+    variables.demoMode = false;
     router.push("/createMap");
   };
   const Credits = () => {
     router.push("/credits");
+  };
+  const Demo = () => {
+    variables.demoMode = true;
+    router.push("/createMap");
   };
 
   return (
@@ -18,6 +23,7 @@ export default function Start() {
       <View style={[styles.container]}>
         <Text style={GlobalStyles.h1}>La caza del Wumpus</Text>
         <Button texto="Empezar" onPress={Start} />
+        <Button texto="Modo de demostracion" onPress={Demo} />
         <Button texto="Créditos" onPress={Credits} />
         <View style={styles.version}>
           <Text style={GlobalStyles.h6}>versión {variables.version}</Text>

@@ -3,6 +3,7 @@ import { SvgProps } from "react-native-svg";
 //configuraciones
 export const variables = {
   debug: false,
+  demoMode: false,
   halls: 12,
   holes: 4,
   randMoves: 4,

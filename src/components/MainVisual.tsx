@@ -36,7 +36,6 @@ export default function MainVisual({ flag }: passFlag) {
     <View style={styles.wrapper}>
       <View style={styles.background}>
         {room ? <BackGroundSVG /> : null}
-        {hole ? <HoleSVG /> : null}
         {passageway ? <Door1SVG /> : null}
       </View>
       <View style={styles.enemy}>{wumpus ? <WumpusSVG /> : null}</View>

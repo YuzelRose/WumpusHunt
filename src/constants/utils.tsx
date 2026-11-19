@@ -61,8 +61,10 @@ export function manageAction(
       if (getRooomEnemy() === enemyType.wumpus) {
         const amo = inventoryStorage.inv.amo;
         const life = wumpusStorage.life - amo;
-        if (life <= 0) router.push("/end");
-        else {
+        if (life <= 0) {
+          variables.demoMode = false;
+          router.replace("/end");
+        } else {
           for (let i = 0; i < variables.randWumpusMoves; i++) randWumpusMove();
           inventoryStorage.inv.amo = 0;
           wumpusStorage.life = life;
