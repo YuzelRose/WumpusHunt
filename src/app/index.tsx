@@ -5,7 +5,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 export default function Index() {
   const router = useRouter();
   const handlePress = () => {
-    router.push("/start");
+    router.replace("/start");
   };
 
   return (

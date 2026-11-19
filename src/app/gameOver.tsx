@@ -6,7 +6,7 @@ export default function GameOver() {
   const router = useRouter();
 
   const onPress = () => {
-    router.push("/start");
+    router.replace("/start");
   };
 
   return (

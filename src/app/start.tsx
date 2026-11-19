@@ -1,21 +1,27 @@
 import Button from "@/components/Button";
 import { variables } from "@/constants/configs";
-import { GlobalStyles } from "@/constants/GlobalStyles";
+import { Colors, GlobalStyles } from "@/constants/GlobalStyles";
 import { useRouter } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 export default function Start() {
+  const [dificulty, setDificulty] = useState(variables.dificulty);
   const router = useRouter();
   const Start = () => {
     variables.demoMode = false;
-    router.push("/createMap");
+    router.replace("/createMap");
   };
   const Credits = () => {
-    router.push("/credits");
+    router.replace("/credits");
   };
   const Demo = () => {
     variables.demoMode = true;
-    router.push("/createMap");
+    router.replace("/createMap");
+  };
+  const CDif = () => {
+    variables.dificulty = !variables.dificulty;
+    setDificulty(variables.dificulty);
   };
 
   return (
@@ -26,6 +32,12 @@ export default function Start() {
         <Button texto="Modo de demostracion" onPress={Demo} />
         <Button texto="Créditos" onPress={Credits} />
         <View style={styles.version}>
+          <Pressable onPress={CDif}>
+            <Text style={styles.pressable}>
+              Dificultad:
+              {dificulty ? " Normal" : " Facil"}
+            </Text>
+          </Pressable>
           <Text style={GlobalStyles.h6}>versión {variables.version}</Text>
         </View>
       </View>
@@ -44,5 +56,9 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "flex-end",
     paddingHorizontal: 15,
+  },
+  pressable: {
+    color: Colors.text,
+    cursor: "pointer",
   },
 });

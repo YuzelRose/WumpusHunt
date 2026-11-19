@@ -6,7 +6,13 @@ import {
 import { msg } from "@/constants/msg/msgStorage";
 import { wumpusStorage } from "@/constants/wumpus/WumpusStorage";
 import { Dispatch, SetStateAction } from "react";
-import { mapCell, mapStorage, posStorage } from "../directionalMapStorage";
+import {
+  cardinalDir,
+  directionStorage,
+  mapCell,
+  mapStorage,
+  posStorage,
+} from "../directionalMapStorage";
 import { getPos, mapNotNull } from "../directionUtils";
 import { createHallways } from "./createHallWays";
 //inicializar mapa
@@ -52,12 +58,16 @@ function createRoom(map: mapCell[][], createdRoom: string) {
 //crear mapa
 export async function createNewMap(out: Dispatch<SetStateAction<string>>) {
   inventoryStorage.inv.amo = baseInventory.baseAmo;
-  if (variables.demoMode) inventoryStorage.inv.light = true;
-  else inventoryStorage.inv.light = false;
+  inventoryStorage.inv.light = false;
   inventoryStorage.inv.sword = false;
+  if (!variables.dificulty) inventoryStorage.inv.light = true;
   wumpusStorage.life = variables.wumpusLife;
   posStorage.pos = { x: 3, y: 3 };
-  posStorage.prev = { x: 3, y: 3 };
+  posStorage.prev = { x: 3, y: 4 };
+  directionStorage.dir = {
+    direction: cardinalDir.norteS,
+    roseWind: cardinalDir.norteN,
+  };
   out(msg.a);
   let Map = newMap();
   Map = dropSides(Map);

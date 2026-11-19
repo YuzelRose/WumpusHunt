@@ -17,10 +17,10 @@ export function prevRoomEvent(
   const lastRoomType = mapStorage.map[lastRoom.y][lastRoom.x].place;
   const lastRoomEnemy = mapStorage.map[lastRoom.y][lastRoom.x].enemy;
   const light = inventoryStorage.inv.light;
-  if (lastRoomEnemy === enemyType.wumpus) router.push("/gameOver");
+  if (lastRoomEnemy === enemyType.wumpus) router.replace("/gameOver");
   switch (lastRoomType) {
     case roomType.hole:
-      if (action !== actions.back) router.push("/gameOver");
+      if (action !== actions.back) router.replace("/gameOver");
       break;
     case roomType.passageway:
       setMapNewEnemySTR(enemyType.none);

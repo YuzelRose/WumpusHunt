@@ -1,15 +1,17 @@
-// src/components/ui/DemoController.tsx
 import { wumpusAgent } from "@/constants/ai/wumpusAgent";
 import { flag, variables } from "@/constants/configs";
 import { Colors } from "@/constants/GlobalStyles";
 import { manageAction } from "@/constants/utils";
 import { wumpusStorage } from "@/constants/wumpus/WumpusStorage";
-import { useRouter } from "expo-router";
+import { usePathname, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function DemoController({ flag, setFlag }: flag) {
   const router = useRouter();
+  const pathname = usePathname();
+  const isFocused = pathname === "/wumpus";
+
   const [paused, setPaused] = useState(false);
   const [speedMs, setSpeedMs] = useState(1000);
   const [turn, setTurn] = useState(1);
@@ -22,14 +24,18 @@ export default function DemoController({ flag, setFlag }: flag) {
   flagRef.current = flag;
 
   useEffect(() => {
-    wumpusAgent.reset();
-  }, []);
+    if (isFocused) {
+      wumpusAgent.reset();
+      setTurn(1);
+      setThought("Iniciando agente autónomo...");
+    }
+  }, [isFocused]);
 
   useEffect(() => {
-    if (paused || !variables.demoMode) return;
+    if (paused || !variables.demoMode || !isFocused) return;
 
     const timer = setInterval(() => {
-      if (!variables.demoMode || wumpusStorage.life <= 0) {
+      if (!variables.demoMode || wumpusStorage.life <= 0 || !isFocused) {
         clearInterval(timer);
         return;
       }
@@ -41,7 +47,7 @@ export default function DemoController({ flag, setFlag }: flag) {
     }, speedMs);
 
     return () => clearInterval(timer);
-  }, [paused, speedMs, router, setFlag]);
+  }, [paused, speedMs, isFocused, router, setFlag]);
 
   const exitDemo = () => {
     variables.demoMode = false;

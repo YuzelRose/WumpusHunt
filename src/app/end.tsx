@@ -6,7 +6,7 @@ export default function End() {
   const router = useRouter();
 
   const onPress = () => {
-    router.push("/credits");
+    router.replace("/credits");
   };
 
   return (

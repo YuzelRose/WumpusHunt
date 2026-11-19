@@ -17,7 +17,7 @@ export default function CreateMap() {
 
   return (
     <Pressable
-      onPress={flag ? () => router.push("/wumpus") : undefined}
+      onPress={flag ? () => router.replace("/wumpus") : undefined}
       style={[GlobalStyles.backG, style.wrapper]}
     >
       <View>
