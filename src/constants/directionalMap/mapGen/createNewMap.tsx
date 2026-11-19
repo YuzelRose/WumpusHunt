@@ -52,11 +52,12 @@ function createRoom(map: mapCell[][], createdRoom: string) {
 //crear mapa
 export async function createNewMap(out: Dispatch<SetStateAction<string>>) {
   inventoryStorage.inv.amo = baseInventory.baseAmo;
-  inventoryStorage.inv.light = false;
+  if (variables.demoMode) inventoryStorage.inv.light = true;
+  else inventoryStorage.inv.light = false;
   inventoryStorage.inv.sword = false;
   wumpusStorage.life = variables.wumpusLife;
   posStorage.pos = { x: 3, y: 3 };
-  posStorage.prev = { x: 3, y: 4 };
+  posStorage.prev = { x: 3, y: 3 };
   out(msg.a);
   let Map = newMap();
   Map = dropSides(Map);

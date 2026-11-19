@@ -11,7 +11,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 export default function DemoController({ flag, setFlag }: flag) {
   const router = useRouter();
   const [paused, setPaused] = useState(false);
-  const [speedMs, setSpeedMs] = useState(700);
+  const [speedMs, setSpeedMs] = useState(1000);
   const [turn, setTurn] = useState(1);
   const [thought, setThought] = useState("Iniciando agente autónomo...");
 
@@ -70,10 +70,10 @@ export default function DemoController({ flag, setFlag }: flag) {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => setSpeedMs((s) => (s === 700 ? 250 : 700))}
+          onPress={() => setSpeedMs((s) => (s === 1000 ? 330 : 1000))}
           style={styles.btn}
         >
-          <Text style={styles.btnText}>{speedMs === 700 ? "1x" : "3x"}</Text>
+          <Text style={styles.btnText}>{speedMs === 1000 ? "1x" : "3x"}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={exitDemo} style={styles.btn}>

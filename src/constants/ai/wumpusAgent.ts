@@ -1,18 +1,18 @@
 // src/constants/ai/wumpusAgent.ts
 import { actions, enemyType, roomType, variables } from "@/constants/configs";
 import {
-    cardinalDir,
-    directionStorage,
-    posStorage,
-    type position,
+  cardinalDir,
+  directionStorage,
+  posStorage,
+  type position,
 } from "@/constants/directionalMap/directionalMapStorage";
 import {
-    facedDirection,
-    getRoom,
-    getRoomData,
-    getRooomEnemy,
-    validDirections,
-    validDirectionsBool,
+  facedDirection,
+  getRoom,
+  getRoomData,
+  getRooomEnemy,
+  validDirections,
+  validDirectionsBool,
 } from "@/constants/directionalMap/directionUtils";
 import { inventoryStorage } from "@/constants/inventory/inventoryStorage";
 import { wumpusStorage } from "@/constants/wumpus/WumpusStorage";
@@ -112,8 +112,8 @@ class WumpusAIAgent {
 
     this.visitedSequence.push(key);
     if (this.visitedSequence.length > 14) this.visitedSequence.shift();
-
-    const isHole = data.place === roomType.hole;
+    const hasLight = inventoryStorage.inv.light;
+    const isHole = hasLight && data.place === roomType.hole;
     const hasBats =
       data.place === roomType.passageway && enemy === enemyType.bats;
     const hasWumpusHere = enemy === enemyType.wumpus;
@@ -272,7 +272,7 @@ class WumpusAIAgent {
     const minRequiredAmmo = Math.max(variables.wumpusLife, wumpusStorage.life);
 
     // 0. SUPERVIVENCIA: Si detecta agujero con candil, retrocede al instante
-    if (room === roomType.hole) {
+    if (inv.light && room === roomType.hole) {
       return {
         action: actions.back,
         reason: "¡Agujero detectado con el candil! Retrocediendo de inmediato",
