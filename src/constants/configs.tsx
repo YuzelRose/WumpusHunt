@@ -2,7 +2,7 @@ import { SvgProps } from "react-native-svg";
 
 //configuraciones
 export const variables = {
-  debug: true,
+  debug: false,
   demoMode: false,
   dificulty: true,
   halls: 12,
